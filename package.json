@@ -1,0 +1,427 @@
+{
+  "name": "command-runbook",
+  "displayName": "Command Runbook",
+  "description": "Save useful terminal commands with a human-readable description and run them again later — without maintaining commands.md files.",
+  "version": "0.2.0",
+  "publisher": "irohitsharma21",
+  "license": "MIT",
+  "author": {
+    "name": "Rohit Sharma",
+    "url": "https://github.com/irohitsharma21"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/irohitsharma21/command-runbook.git"
+  },
+  "bugs": {
+    "url": "https://github.com/irohitsharma21/command-runbook/issues"
+  },
+  "homepage": "https://github.com/irohitsharma21/command-runbook#readme",
+  "engines": {
+    "vscode": "^1.93.0"
+  },
+  "categories": [
+    "Other",
+    "Snippets"
+  ],
+  "keywords": [
+    "terminal",
+    "commands",
+    "runbook",
+    "shell",
+    "snippets",
+    "productivity",
+    "cli",
+    "devops"
+  ],
+  "main": "./out/src/extension.js",
+  "bin": {
+    "runbook": "./bin/runbook.js"
+  },
+  "files": [
+    "bin/",
+    "out/src/",
+    "resources/",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "runbook",
+          "title": "Runbook",
+          "icon": "resources/runbook.svg"
+        }
+      ]
+    },
+    "views": {
+      "runbook": [
+        {
+          "id": "runbook.commands",
+          "name": "Saved Commands",
+          "icon": "resources/runbook.svg",
+          "contextualTitle": "Runbook"
+        }
+      ]
+    },
+    "viewsWelcome": [
+      {
+        "view": "runbook.commands",
+        "contents": "Never forget a terminal command again.\n\nSave useful terminal commands with a description and reuse them without maintaining `commands.md` files.\n\n[Save Last Command](command:runbook.saveLastCommand)\n[Add Command Manually](command:runbook.addCommand)\n\nTip: open the Command Palette and run \"Runbook: Save Last Command\" right after you run something useful in the terminal.",
+        "when": "runbook.isEmpty"
+      }
+    ],
+    "commands": [
+      {
+        "command": "runbook.saveLastCommand",
+        "title": "Save Last Command",
+        "category": "Runbook",
+        "icon": "$(save)"
+      },
+      {
+        "command": "runbook.saveFromHistory",
+        "title": "Save Command from Recent History",
+        "category": "Runbook",
+        "icon": "$(history)"
+      },
+      {
+        "command": "runbook.addCommand",
+        "title": "Add Command",
+        "category": "Runbook",
+        "icon": "$(add)"
+      },
+      {
+        "command": "runbook.searchCommands",
+        "title": "Search Commands",
+        "category": "Runbook",
+        "icon": "$(search)"
+      },
+      {
+        "command": "runbook.filter",
+        "title": "Filter Sidebar",
+        "category": "Runbook",
+        "icon": "$(filter)"
+      },
+      {
+        "command": "runbook.clearFilter",
+        "title": "Clear Sidebar Filter",
+        "category": "Runbook",
+        "icon": "$(clear-all)"
+      },
+      {
+        "command": "runbook.refresh",
+        "title": "Refresh",
+        "category": "Runbook",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "runbook.setSortOrder",
+        "title": "Change Sort Order",
+        "category": "Runbook",
+        "icon": "$(sort-precedence)"
+      },
+      {
+        "command": "runbook.export",
+        "title": "Export Commands",
+        "category": "Runbook",
+        "icon": "$(export)"
+      },
+      {
+        "command": "runbook.import",
+        "title": "Import Commands",
+        "category": "Runbook",
+        "icon": "$(import)"
+      },
+      {
+        "command": "runbook.run",
+        "title": "Run Command",
+        "category": "Runbook",
+        "icon": "$(play)"
+      },
+      {
+        "command": "runbook.insert",
+        "title": "Insert into Terminal",
+        "category": "Runbook",
+        "icon": "$(terminal)"
+      },
+      {
+        "command": "runbook.copy",
+        "title": "Copy Command",
+        "category": "Runbook",
+        "icon": "$(copy)"
+      },
+      {
+        "command": "runbook.edit",
+        "title": "Edit",
+        "category": "Runbook",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "runbook.delete",
+        "title": "Delete",
+        "category": "Runbook",
+        "icon": "$(trash)"
+      },
+      {
+        "command": "runbook.showActions",
+        "title": "Show Actions",
+        "category": "Runbook"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "runbook.run",
+          "when": "false"
+        },
+        {
+          "command": "runbook.insert",
+          "when": "false"
+        },
+        {
+          "command": "runbook.copy",
+          "when": "false"
+        },
+        {
+          "command": "runbook.edit",
+          "when": "false"
+        },
+        {
+          "command": "runbook.delete",
+          "when": "false"
+        },
+        {
+          "command": "runbook.showActions",
+          "when": "false"
+        },
+        {
+          "command": "runbook.clearFilter",
+          "when": "runbook.hasFilter"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "runbook.saveLastCommand",
+          "when": "view == runbook.commands",
+          "group": "navigation@1"
+        },
+        {
+          "command": "runbook.addCommand",
+          "when": "view == runbook.commands",
+          "group": "navigation@2"
+        },
+        {
+          "command": "runbook.filter",
+          "when": "view == runbook.commands && !runbook.hasFilter",
+          "group": "navigation@3"
+        },
+        {
+          "command": "runbook.clearFilter",
+          "when": "view == runbook.commands && runbook.hasFilter",
+          "group": "navigation@3"
+        },
+        {
+          "command": "runbook.refresh",
+          "when": "view == runbook.commands",
+          "group": "navigation@4"
+        },
+        {
+          "command": "runbook.searchCommands",
+          "when": "view == runbook.commands",
+          "group": "1_search@1"
+        },
+        {
+          "command": "runbook.setSortOrder",
+          "when": "view == runbook.commands",
+          "group": "1_search@2"
+        },
+        {
+          "command": "runbook.saveFromHistory",
+          "when": "view == runbook.commands",
+          "group": "2_save@1"
+        },
+        {
+          "command": "runbook.export",
+          "when": "view == runbook.commands",
+          "group": "3_portability@1"
+        },
+        {
+          "command": "runbook.import",
+          "when": "view == runbook.commands",
+          "group": "3_portability@2"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "runbook.run",
+          "when": "view == runbook.commands && viewItem == runbookCommand",
+          "group": "inline@1"
+        },
+        {
+          "command": "runbook.insert",
+          "when": "view == runbook.commands && viewItem == runbookCommand",
+          "group": "inline@2"
+        },
+        {
+          "command": "runbook.run",
+          "when": "view == runbook.commands && viewItem == runbookCommand",
+          "group": "1_execute@1"
+        },
+        {
+          "command": "runbook.insert",
+          "when": "view == runbook.commands && viewItem == runbookCommand",
+          "group": "1_execute@2"
+        },
+        {
+          "command": "runbook.copy",
+          "when": "view == runbook.commands && viewItem == runbookCommand",
+          "group": "1_execute@3"
+        },
+        {
+          "command": "runbook.edit",
+          "when": "view == runbook.commands && viewItem == runbookCommand",
+          "group": "2_modify@1"
+        },
+        {
+          "command": "runbook.delete",
+          "when": "view == runbook.commands && viewItem == runbookCommand",
+          "group": "2_modify@2"
+        }
+      ],
+      "terminal/context": [
+        {
+          "command": "runbook.saveLastCommand",
+          "group": "runbook@1"
+        }
+      ],
+      "terminal/title/context": [
+        {
+          "command": "runbook.saveLastCommand",
+          "group": "runbook@1"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "runbook.searchCommands",
+        "key": "ctrl+alt+r",
+        "mac": "cmd+alt+r"
+      },
+      {
+        "command": "runbook.saveLastCommand",
+        "key": "ctrl+alt+s",
+        "mac": "cmd+alt+s"
+      }
+    ],
+    "configuration": {
+      "title": "Runbook",
+      "properties": {
+        "runbook.confirmBeforeRun": {
+          "type": "boolean",
+          "default": false,
+          "description": "Ask for confirmation before running any saved command in the terminal."
+        },
+        "runbook.defaultScope": {
+          "type": "string",
+          "enum": [
+            "project",
+            "global"
+          ],
+          "enumDescriptions": [
+            "Save to the current workspace only.",
+            "Save so the command is available in every workspace."
+          ],
+          "default": "project",
+          "description": "Scope pre-selected when saving a new command."
+        },
+        "runbook.showGlobalCommands": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show global commands in the Runbook sidebar."
+        },
+        "runbook.sortBy": {
+          "type": "string",
+          "enum": [
+            "recent",
+            "mostUsed",
+            "recentlyAdded",
+            "alphabetical"
+          ],
+          "enumDescriptions": [
+            "Recently used first.",
+            "Most used first.",
+            "Recently added first.",
+            "Alphabetical by description."
+          ],
+          "default": "recent",
+          "description": "Sort order for saved commands."
+        },
+        "runbook.groupByTag": {
+          "type": "boolean",
+          "default": true,
+          "description": "Group commands by their first tag in the sidebar. When disabled, commands are listed flat under each scope."
+        },
+        "runbook.autoDescription": {
+          "type": "boolean",
+          "default": true,
+          "description": "Pre-fill the description field with an automatically generated description of the command. It is always editable."
+        },
+        "runbook.warnOnSecrets": {
+          "type": "boolean",
+          "default": true,
+          "description": "Warn before saving or exporting commands that look like they contain credentials or tokens."
+        },
+        "runbook.projectStorage": {
+          "type": "string",
+          "enum": [
+            "file",
+            "workspaceState"
+          ],
+          "enumDescriptions": [
+            "Store project commands in .runbook/commands.json inside the project, so they can be committed and read by the Runbook CLI.",
+            "Store project commands in VS Code's private workspace storage. Nothing is written into your repository, but the CLI cannot see them."
+          ],
+          "default": "file",
+          "description": "Where project-scoped commands are stored. Changing this takes effect after a window reload."
+        },
+        "runbook.confirmDangerousCommands": {
+          "type": "boolean",
+          "default": true,
+          "description": "Ask for confirmation before running potentially destructive commands (rm -rf, DROP DATABASE, kubectl delete, ...)."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src test --ext .ts",
+    "test": "npm run compile && node --test \"out/test/**/*.test.js\"",
+    "package": "vsce package",
+    "clean": "node -e \"require('node:fs').rmSync('out',{recursive:true,force:true})\"",
+    "publish:vsce": "vsce publish",
+    "publish:ovsx": "ovsx publish"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.0",
+    "@types/vscode": "~1.93.0",
+    "@typescript-eslint/eslint-plugin": "^7.18.0",
+    "@typescript-eslint/parser": "^7.18.0",
+    "@vscode/vsce": "^3.2.1",
+    "eslint": "^8.57.0",
+    "ovsx": "^1.0.2",
+    "typescript": "^5.5.4"
+  },
+  "icon": "resources/icon.png",
+  "galleryBanner": {
+    "color": "#4F46E5",
+    "theme": "dark"
+  },
+  "qna": "marketplace"
+}
